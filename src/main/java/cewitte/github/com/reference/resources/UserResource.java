@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import cewitte.github.com.reference.entities.User;
 import cewitte.github.com.reference.services.UserService;
-
+ 
 @RestController
 @RequestMapping(value = "/users")
 public class UserResource {
