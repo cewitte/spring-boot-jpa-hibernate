@@ -8,30 +8,31 @@ import org.springframework.stereotype.Service;
 
 import cewitte.github.com.reference.entities.User;
 import cewitte.github.com.reference.repositories.UserRepository;
+import cewitte.github.com.reference.services.exceptions.ResourceNotFoundException;
 
 @Service
 public class UserService {
-	
+
 	@Autowired
 	private UserRepository repository;
-	
-	public List<User> findAll(){
+
+	public List<User> findAll() {
 		return repository.findAll();
 	}
-	
+
 	public User findById(Long id) {
 		Optional<User> obj = repository.findById(id);
-		return obj.get();
+		return obj.orElseThrow(() -> new ResourceNotFoundException(id));
 	}
-	
+
 	public User insert(User obj) {
 		return repository.save(obj);
 	}
-	
+
 	public void delete(Long id) {
 		repository.deleteById(id);
 	}
-	
+
 	public User update(Long id, User obj) {
 		@SuppressWarnings("deprecation")
 		User entity = repository.getOne(id);
@@ -42,6 +43,6 @@ public class UserService {
 	private void updateData(User entity, User obj) {
 		entity.setName(obj.getName());
 		entity.setEmail(obj.getEmail());
-		entity.setPhone(obj.getPhone());		
+		entity.setPhone(obj.getPhone());
 	}
 }
